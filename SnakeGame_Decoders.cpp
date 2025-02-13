@@ -51,19 +51,38 @@ void StartGame()
 {
     srand(static_cast<unsigned>(time(0)));
     gameOver = false;
-    dir = STOP;
+    dir = RIGHT; // Initialize with a default direction
     snakeX = WIDTH / 2;
     snakeY = HEIGHT / 2;
-    foodX = (rand() % (WIDTH - 2)) + 1;
-    foodY = (rand() % (HEIGHT - 2)) + 1;
     score = 0;
-    tailLength =0 ; // Start with 2 tail segments
+    tailLength = 2; // Start with 2 tail segments
 
     // Initialize tail behind the head
     for (int i = 0; i < tailLength; i++) {
         snakeTailX[i] = snakeX - (i + 1);
         snakeTailY[i] = snakeY;
     }
+
+    // Ensure food doesn't spawn on the snake
+    bool isFoodOnSnake;
+    do {
+        isFoodOnSnake = false;
+        foodX = (rand() % (WIDTH - 2)) + 1;
+        foodY = (rand() % (HEIGHT - 2)) + 1;
+
+        // Check if food is on the snake's head
+        if (foodX == snakeX && foodY == snakeY)
+            isFoodOnSnake = true;
+
+        // Check if food is on the snake's tail
+        for (int i = 0; i < tailLength; i++) {
+            if (foodX == snakeTailX[i] && foodY == snakeTailY[i]) {
+                isFoodOnSnake = true;
+                break;
+            }
+        }
+    } while (isFoodOnSnake);
+
     HideCursor();
 }
 
@@ -185,20 +204,20 @@ void UpdateGameState()
 
 int main()
 {
-     
-        StartGame();
-        while (!gameOver)
-        {
-            Playground();
-            ProcessInput();
-            UpdateGameState();
-            Sleep(100);
-        }
+    system("mode con: cols=80 lines=30"); // Resize console window
+    StartGame();
+    while (!gameOver)
+    {
+        Playground();
+        ProcessInput();
+        UpdateGameState();
+        Sleep(10);
+    }
 
-        cout << "\nGame Over! Final Score: " << score << endl;
-        if (score < 50) cout << "Rank: Beginner\n";
-        else if (score < 100) cout << "Rank: Intermediate\n";
-        else if (score < 200) cout << "Rank: Expert\n";
-        else cout << "Rank: Legend\n";
+    cout << "\nGame Over! Final Score: " << score << endl;
+    if (score < 50) cout << "Rank: Beginner\n";
+    else if (score < 100) cout << "Rank: Intermediate\n";
+    else if (score < 200) cout << "Rank: Expert\n";
+    else cout << "Rank: Legend\n";
     return 0;
 }
