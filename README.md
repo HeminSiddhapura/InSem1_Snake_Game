@@ -2,11 +2,11 @@
 
 
 Functions:
-•	InitializeGame(): Sets up initial game state (snake, food, score, etc.).
-•	DrawGameBoard(): Renders the game board, snake, and food.
+•	StartGame(): Sets up initial game state (snake, food, score, etc.).
+•	PlayGround(): Renders the game board, snake, and food.
 •	ProcessInput(): Handles keyboard input to change the snake's direction.
 •	UpdateGameState(): Moves the snake, handles collisions, and checks for food consumption.
-•	SetCursorPosition(): Updates cursor position for smooth rendering.
+•	SetCursor(): Updates cursor position for smooth rendering.
 •	SetColor(): Changes text color in the console.
 
 Game Logic:
@@ -16,10 +16,10 @@ Eating food increases the score and grows the tail.
 
 Game Movement:
 We Have used the Most common method of directing The character (W,A,S,D)
-W:- UP
-A:- LEFT
-S:- DOWN
-D:-RIGHT
+W,w,upper arrow:- UP
+A,a,left arrow:- LEFT
+S,s,down arrow:- DOWN
+D,d,right arrow:-RIGHT
 
 Game Setup:
 The game initializes the snake in the middle of the board and places a randomly generated food item.
